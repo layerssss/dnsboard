@@ -1,0 +1,15 @@
+{
+  "name": "dnsboard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "jade":"latest",
+    "stylus":"latest",
+    "request":"latest",
+    "express": "latest",
+    "mikronode": "latest"
+  }
+}

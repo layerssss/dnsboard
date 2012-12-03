@@ -1,0 +1,36 @@
+!!!
+head
+  title dnsboard
+body.container-fluid
+  h1 dnsboard
+  section
+    h2 claim yourself?
+    form(method='post')
+      p
+        input(placeholder='yourname.yourtype',name='name',value=name)
+        button(type='submit') CLAIM
+  section
+    h2 they're around you~~
+    for d in dns
+      p
+        input(value=d.name)
+        small (#{d.address})
+
+
+  :stylus
+    body
+      @maincolor:spin(red,50%);
+      margin:0px;
+      padding:30px;
+      h1
+        margin:-30px;
+        padding:10px 20px;
+        background: @maincolor;
+        box-shadow: 0 0 5px darken(@maincolor,50%);
+      section
+
+        h2
+          margin-top:40px;
+        p
+          margin-left:40px;
+  script(src='prefixfree.js')
