@@ -13,7 +13,7 @@ body.container-fluid
     h2 they're around you~~
     for d in dns
       p
-        input(value=d.name)
+        input(value=d.name,readonly='readonly')
         small (#{d.address})
 
 
