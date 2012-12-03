@@ -13,24 +13,53 @@ body.container-fluid
     h2 they're around you~~
     for d in dns
       p
-        input(value=d.name,readonly='readonly')
-        small (#{d.address})
-
-
+        input(value=d.name,readonly='readonly',onclick='this.select()')
+        small (#{d.address}
+          button.expand http
+          a(href='http://#{d.name}/') http://#{d.name}/
+          button.expand ftp
+          a(href='ftp://#{d.name}/') ftp://#{d.name}/
+          button.expand git
+          a(href='git://#{d.name}/') git://#{d.name}/
+          button.expand svn
+          a(href='svn://#{d.name}/') svn://#{d.name}/
+          button.expand (unc)
+          a(href='//#{d.name}') /#{''}/#{d.name}
+          |)
+  script(src='jquery.js')
+  :coffeescript
+    $ ->
+      $('.expand').next().hide().end().click ->
+        $(this).next().show().end().siblings('.expand').next().hide()
   :stylus
     body
+      font-family: arial
+      input,button
+        font-family: arial
+        padding:5px
+        background: lighten(@maincolor,70%)
+        border:solid 1px darken(@maincolor,50%)
+        margin:2px
+        &:hover
+          background: lighten(@maincolor,40%)
       @maincolor:spin(red,50%);
       margin:0px;
       padding:30px;
+      a
+        font-weight:bold;
+        color: darken(@maincolor,30%)
       h1
         margin:-30px;
         padding:10px 20px;
         background: @maincolor;
         box-shadow: 0 0 5px darken(@maincolor,50%);
       section
-
         h2
-          margin-top:40px;
+          margin-top:60px;
         p
           margin-left:40px;
+          small
+            .expand
+              padding:2px
+              margin:auto 5px;
   script(src='prefixfree.js')
