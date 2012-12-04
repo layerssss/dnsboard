@@ -5,27 +5,41 @@ body.container-fluid
   h1 dnsboard
   section
     h2 claim yourself?
+    h6 regist your current host
     form(method='post')
       p
         input(placeholder='yourname.yourtype',name='name',value=name)
         button(type='submit') CLAIM
+  mixin dns(d)
+    p
+      input(value=d.name,readonly='readonly',onclick='this.select()')
+      small (#{d.address}
+        button.expand http
+        a(href='http://#{d.name}/') http://#{d.name}/
+        button.expand ftp
+        a(href='ftp://#{d.name}/') ftp://#{d.name}/
+        button.expand git
+        a(href='git://#{d.name}/') git://#{d.name}/
+        button.expand svn
+        a(href='svn://#{d.name}/') svn://#{d.name}/
+        button.expand (unc)
+        a(href='//#{d.name}') /#{''}/#{d.name}
+        |)
+
   section
-    h2 they're around you~~
+    h2 they already claimed themselves~ 
+    h6 other hosts in network
     for d in dns
-      p
-        input(value=d.name,readonly='readonly',onclick='this.select()')
-        small (#{d.address}
-          button.expand http
-          a(href='http://#{d.name}/') http://#{d.name}/
-          button.expand ftp
-          a(href='ftp://#{d.name}/') ftp://#{d.name}/
-          button.expand git
-          a(href='git://#{d.name}/') git://#{d.name}/
-          button.expand svn
-          a(href='svn://#{d.name}/') svn://#{d.name}/
-          button.expand (unc)
-          a(href='//#{d.name}') /#{''}/#{d.name}
-          |)
+      if dhcp.filter(function(lease){return lease.address==d.address}).length
+        mixin dns(d)
+          
+  section
+    h2 they cannot see you, but you can see them.. 
+    h6 public resouces in network 
+    for d in dns
+      if !dhcp.filter(function(lease){return lease.address==d.address}).length
+        mixin dns(d)
+
   script(src='jquery.js')
   :coffeescript
     $ ->
@@ -56,6 +70,9 @@ body.container-fluid
       section
         h2
           margin-top:60px;
+        h6
+          margin-left:20px
+          color:darken(@maincolor,50%)
         p
           margin-left:40px;
           small
